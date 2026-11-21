@@ -27,8 +27,13 @@ To stop is not to lose the way ahead;
 it is to choose what moving's for.
 `;
 
+// Assemble the complete output text before writing, so the file is
+// written in a single call: normalise line endings, strip any trailing
+// blank lines, and guarantee exactly one newline at the end.
+const text: string = poem.replace(/\r\n/g, "\n").trimEnd() + "\n";
+
 const outDir: string = process.env.MAKEFUN_OUTPUT_DIR ?? "/output";
 mkdirSync(outDir, { recursive: true });
 const outFile: string = join(outDir, "entry.txt");
-writeFileSync(outFile, poem, "utf8");
+writeFileSync(outFile, text, "utf8");
 console.log(`Wrote poem to ${outFile}`);
